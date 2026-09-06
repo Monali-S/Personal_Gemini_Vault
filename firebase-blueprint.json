@@ -1,0 +1,40 @@
+{
+  "entities": {
+    "User": {
+      "path": "users/{userId}",
+      "fields": {
+        "userId": { "type": "string", "description": "Unique Firebase Auth UID" },
+        "email": { "type": "string", "description": "Verified user email address" },
+        "displayName": { "type": "string", "description": "User display name" },
+        "createdAt": { "type": "string", "description": "ISO timestamp of user creation" }
+      }
+    },
+    "JournalEntry": {
+      "path": "users/{userId}/journals/{journalId}",
+      "fields": {
+        "id": { "type": "string", "description": "Unique UUID for the journal entry" },
+        "userId": { "type": "string", "description": "Strict tenant owner UID" },
+        "title": { "type": "string", "description": "User or AI-generated title (max 200 chars)" },
+        "rawContent": { "type": "string", "description": "Original user notes or conversation transcript" },
+        "summary": { "type": "string", "description": "AI-generated executive summary" },
+        "keyThemes": { "type": "array", "description": "Categorical tags and themes identified by Gemini" },
+        "actionItems": { "type": "array", "description": "Actionable takeaways extracted from brainstorming" },
+        "cognitiveInsights": { "type": "array", "description": "Cognitive reflections and emotional patterns" },
+        "mood": { "type": "string", "description": "Dominant emotional state or tone" },
+        "isEncrypted": { "type": "boolean", "description": "True if payload is encrypted client-side with AES-GCM" },
+        "createdAt": { "type": "string", "description": "ISO timestamp of creation" },
+        "updatedAt": { "type": "string", "description": "ISO timestamp of last update" }
+      }
+    },
+    "BrainstormSession": {
+      "path": "users/{userId}/sessions/{sessionId}",
+      "fields": {
+        "id": { "type": "string", "description": "Session identifier" },
+        "userId": { "type": "string", "description": "Authenticated owner UID" },
+        "title": { "type": "string", "description": "Conversation topic" },
+        "messages": { "type": "array", "description": "Multi-turn exchange messages [{role, content, timestamp}]" },
+        "updatedAt": { "type": "string", "description": "Timestamp of last interaction" }
+      }
+    }
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "name": "Gemini Vault",
+  "description": "A secure, privacy-first confidential vault and brainstorming companion powered by Gemini AI with Firebase authentication and isolated Firestore data storage.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

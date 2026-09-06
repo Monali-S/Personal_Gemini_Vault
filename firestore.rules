@@ -1,0 +1,33 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Zero-Trust Security Directive: Deny all by default
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // User Data Partition (Absolute Tenant Isolation)
+    match /users/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+
+      // Isolated Journal Logs & Summaries Subcollection
+      match /journals/{journalId} {
+        allow read: if request.auth != null && request.auth.uid == userId;
+        allow create: if request.auth != null 
+          && request.auth.uid == userId
+          && request.resource.data.userId == userId
+          && request.resource.data.title is string
+          && request.resource.data.title.size() <= 200;
+        allow update: if request.auth != null 
+          && request.auth.uid == userId
+          && request.resource.data.userId == resource.data.userId; // Immutable ownership
+        allow delete: if request.auth != null && request.auth.uid == userId;
+      }
+
+      // Multi-turn Brainstorm Chat Sessions
+      match /sessions/{sessionId} {
+        allow read, write: if request.auth != null && request.auth.uid == userId;
+      }
+    }
+  }
+}
